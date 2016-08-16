@@ -40,4 +40,7 @@ jspm_packages
 .node_repl_history
 
 ## Ignore the bin/ directory 
-bin/ 
+bin/
+
+## Don't commit my actual config file.
+config/config.json 
