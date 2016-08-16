@@ -39,8 +39,8 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-## Ignore the bin/ directory 
-bin/
+## Ignore the redis-benchmark file if it's in the bin/ directory 
+bin/redis-benchmark
 
 ## Don't commit my actual config file.
 config/config.json 
