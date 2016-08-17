@@ -9,11 +9,13 @@ var fs = require('fs');
 var exec = require('child_process').exec;
 var RedisBenchmark = require('../lib/redis-benchmark');
 var bodyParser = require('body-parser');
+var cfenv = require("cfenv");
 
 // Load the configuration from the config file.
 var configFile = "./config/config.json";
 try {
   var config = JSON.parse(fs.readFileSync(configFile));
+  console.log(config);
 } catch (e) {
   // Quit if the config file can't be read (for now)
   console.log("Error parsing %s - %s", configFile, e);
@@ -66,11 +68,12 @@ app.post('/', function(req, res) {
     });
 });
 
-var server = app.listen(config.port, config.host, function() {
+var appEnv = cfenv.getAppEnv();
+var server = app.listen(appEnv.port, appEnv.bind, function() {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('benchmarks-ui listening on %s:%s', host, port);
+  console.log('benchmarks-ui running on %s', appEnv.url);
 
 });
 

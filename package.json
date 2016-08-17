@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/compybara/redis-benchmarks-ui#readme",
   "dependencies": {
-    "body-parser": "^1.15.2"
+    "body-parser": "^1.15.2",
+    "cfenv": "^1.0.3"
   }
 }
