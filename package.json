@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/compybara/redis-benchmarks-ui/issues"
   },
-  "homepage": "https://github.com/compybara/redis-benchmarks-ui#readme"
+  "homepage": "https://github.com/compybara/redis-benchmarks-ui#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2"
+  }
 }
