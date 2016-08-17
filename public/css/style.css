@@ -97,7 +97,6 @@ html {
 #results_table thead {
   background-color: rgb(40, 134, 175);
   color: #fff;
-  text-align: center;
   font-weight: bolder;
 }
 
@@ -107,7 +106,7 @@ html {
 
 #results_table th, td {
     padding: 15px;
-    text-align: center;
+    text-align: left;
     border-bottom: 1px solid #ddd;
 
 }
