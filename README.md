@@ -19,3 +19,6 @@ To build your own `redis-benchmark` binary make sure you've installed a C compil
     $ make redis-benchmark
 
 If the compile completes successfully you can simply copy the file `src/redis-benchmark` to your app directory.
+
+
+![Alt text](https://raw.githubusercontent.com/compybara/redis-benchmarks-ui/master/screenshots/benchmarks-ui.png)
