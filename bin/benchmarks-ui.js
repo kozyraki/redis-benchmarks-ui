@@ -46,7 +46,6 @@ app.get('/', function(req, res) {
 });
 
 app.post('/', function(req, res) {
-  console.log(req.body);
     benchmarkOpts = {
       "redis_host": req.body.redis_host,
       "redis_port": req.body.redis_port,
@@ -56,9 +55,15 @@ app.post('/', function(req, res) {
     };
 
     runBenchmark(benchmarkOpts, function(results) {
-      console.log(results);
+      // If the reuturned object is empty pass null to the template for the results object.
+      // This will make it easier to determine whether to display an error or not.
+      outputResults = null;
+      if (Object.keys(results).length !== 0) {
+        outputResults = results;
+      }
+
       res.render('results', {
-        "results": results,
+        "results": outputResults,
         "redis_host": req.body.redis_host,
         "redis_port": req.body.redis_port,
         "redis_pw": req.body.redis_pw,
