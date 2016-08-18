@@ -15,7 +15,6 @@ var cfenv = require("cfenv");
 var configFile = "./config/config.json";
 try {
   var config = JSON.parse(fs.readFileSync(configFile));
-  console.log(config);
 } catch (e) {
   // Quit if the config file can't be read (for now)
   console.log("Error parsing %s - %s", configFile, e);
