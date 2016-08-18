@@ -6,7 +6,6 @@
  */
 var express = require('express');
 var fs = require('fs');
-var exec = require('child_process').exec;
 var RedisBenchmark = require('../lib/redis-benchmark');
 var bodyParser = require('body-parser');
 var cfenv = require("cfenv");
