@@ -15,7 +15,7 @@ var configFile = "./config/config.json";
 try {
   var config = JSON.parse(fs.readFileSync(configFile));
 } catch (e) {
-  // Quit if the config file can't be read (for now)
+  // Quit if the config file can't be read
   console.log("Error parsing %s - %s", configFile, e);
   process.exit(1);
 }
@@ -33,17 +33,18 @@ app.set('view engine', 'jade');
 // Create a static resource for the public directory.
 app.use(express.static('public'));
 
-// Set some express configuration options
+// Use the json BodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// Default app route for index.hml
+// GET route for index
 app.get('/', function(req, res) {
   res.render('index');
 });
 
+// POST route for form submit runs redis-benchmark and displays results.
 app.post('/', function(req, res) {
     benchmarkOpts = {
       "redis_host": req.body.redis_host,
@@ -71,6 +72,7 @@ app.post('/', function(req, res) {
     });
 });
 
+// Start the application. Get bind details from cfenv
 var appEnv = cfenv.getAppEnv();
 var server = app.listen(appEnv.port, appEnv.bind, function() {
   var host = server.address().address;
