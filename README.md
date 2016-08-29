@@ -47,5 +47,6 @@ You can deploy this app to CoudFoundry using the included `manifest.yml` and `Pr
 setup instructions for compling a standalone binary in order to run the app in CloudFoundry as it's not likely that the
 CF environment will have a copy of the redis-cli tools installed.
 
-Currently deploying to CloudFoundry doesn't work. Everything runs as expected locally, but there are errors spawning
-the child process when running in a CF container. Hopefully CloudFoundry compatibility will be working soon.
+Note that the compiled binary must be compatible with the CloudFoundry environment. Most likely you will need to build
+it for the Linux x86_64 architecture. In my testing I was not able to run the app in CloudFoundry using a binary built
+in OS X.
