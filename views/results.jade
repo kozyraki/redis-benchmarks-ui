@@ -14,8 +14,9 @@ block results
               td #{val}
     else
       h2#error
-        | An error occurred running redis-benchmark.
+        | An error occurred running redis-benchmark:
         br
-        | Check log for details.
+        br
+        | #{error}
 
 

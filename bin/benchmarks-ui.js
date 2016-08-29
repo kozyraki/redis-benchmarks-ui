@@ -54,21 +54,35 @@ app.post('/', function(req, res) {
       "benchmark_bin": benchmark_cmd
     };
 
-    runBenchmark(benchmarkOpts, function(results) {
+    runBenchmark(benchmarkOpts, function(err, results) {
       // If the reuturned object is empty pass null to the template for the results object.
       // This will make it easier to determine whether to display an error or not.
       outputResults = null;
-      if (Object.keys(results).length !== 0) {
-        outputResults = results;
-      }
 
-      res.render('results', {
+      if (err === null) {
+        outputResults = results;
+
+        res.render('results', {
         "results": outputResults,
         "redis_host": req.body.redis_host,
         "redis_port": req.body.redis_port,
         "redis_pw": req.body.redis_pw,
-        "num_requests": req.body.num_requests
+        "num_requests": req.body.num_requests,
+        "error": null
         });
+
+      } else {
+        res.render('results', {
+        "results": null,
+        "redis_host": req.body.redis_host,
+        "redis_port": req.body.redis_port,
+        "redis_pw": req.body.redis_pw,
+        "num_requests": req.body.num_requests,
+        "error": err.message
+        });
+      }
+
+
     });
 });
 
@@ -93,8 +107,8 @@ var runBenchmark = function(options, callback) {
   console.log("Running benchmark for %s:%s", options.redis_host, options.redis_port);
 
   // Run the benchmark and pass the output to the calling function.
-  benchmark.run(options.num_requests, function(output){
-    callback(output);
+  benchmark.run(options.num_requests, function(err, output){
+    callback(err, output);
   });
 
 };
