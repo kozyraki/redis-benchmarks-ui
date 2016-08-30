@@ -95,7 +95,6 @@ app.post('/api/redis-benchmark', function(req, res) {
    */
   res.contentType('application/json');
 
-  console.log(req.body);
   // Get the benchmark parameters from the request body, or use defaults.
   var redis_host = req.body.host !== undefined ? req.body.host : null;
   var redis_port = req.body.port !== undefined ? req.body.port : 6379;
@@ -115,8 +114,6 @@ app.post('/api/redis-benchmark', function(req, res) {
     "num_requests": num_requests,
     "benchmark_bin": benchmark_cmd
   };
-
-  console.log(JSON.stringify(benchmarkOpts));
 
    runBenchmark(benchmarkOpts, function(err, results) {
     if (err !== null) {
