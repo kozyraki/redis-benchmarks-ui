@@ -18,7 +18,7 @@ block results
          }
 
       br
-      button(id="jsonButton" onclick="json()") Save as JSON
+      button(onclick="json()")#jsonButton Save as JSON
     else
       h2#error
         | An error occurred running redis-benchmark:
