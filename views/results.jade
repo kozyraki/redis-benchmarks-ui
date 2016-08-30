@@ -12,6 +12,13 @@ block results
             tr
               td #{key}
               td #{val}
+      script.
+        function json() {
+          window.open('data:text/json;charset=utf-8,' + '!{JSON.stringify(results)}')
+         }
+
+      br
+      button(id="jsonButton" onclick="json()") Save as JSON
     else
       h2#error
         | An error occurred running redis-benchmark:
