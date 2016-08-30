@@ -50,3 +50,36 @@ CF environment will have a copy of the redis-cli tools installed.
 Note that the compiled binary must be compatible with the CloudFoundry environment. Most likely you will need to build
 it for the Linux x86_64 architecture. In my testing I was not able to run the app in CloudFoundry using a binary built
 in OS X.
+
+
+### API
+
+As well as providing a web-based GUI for running redis-benchmark this app also provides an API endpoint for executing a
+benchmark and receiving the results as a JSON response.
+
+To use the API send a `POST` request to the app at `/api/redis-benchmark`. You will need to supply the details of the
+Redis instance to benchmark in the body of the request. The `host` option is required, and the rest of the values will
+use default values if no value is given.
+
+Here's an example:
+
+    $ curl -H "Content-Type: application/json" -X POST -d '{"host": "10.0.0.184", "port": 6004, "password": "redispassword", requests": 10000}' https://localhost:6001/api/redis-benchmark
+    {
+      "PING_INLINE": "37313.43",
+      "PING_BULK": "37313.43",
+      "SET": "37037.04",
+      "GET": "37174.72",
+      "INCR": "37174.72",
+      "LPUSH": "37453.18",
+      "RPUSH": "37453.18",
+      "LPOP": "37453.18",
+      "RPOP": "37313.43",
+      "SADD": "37313.43",
+      "SPOP": "37037.04",
+      "LPUSH (needed to benchmark LRANGE)": "37174.72",
+      "LRANGE_100 (first 100 elements)": "37313.43",
+      "LRANGE_300 (first 300 elements)": "37593.98",
+      "LRANGE_500 (first 450 elements)": "37174.72",
+      "LRANGE_600 (first 600 elements)": "37313.43",
+      "MSET (10 keys)": "40650.41"
+    }
