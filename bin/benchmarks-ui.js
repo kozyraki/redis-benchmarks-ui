@@ -29,6 +29,7 @@ if (config.hasOwnProperty("benchmark_cmd")) {
 // Initialize the express application. Use Jade as the view engine
 var app = express();
 app.set('view engine', 'jade');
+app.set('json spaces', 2);
 
 // Create a static resource for the public directory.
 app.use(express.static('public'));
@@ -44,8 +45,10 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-// POST route for form submit runs redis-benchmark and displays results.
 app.post('/', function(req, res) {
+  /*
+   * POST route for form submit runs redis-benchmark and displays results.
+   */
   benchmarkOpts = {
     "redis_host": req.body.redis_host,
     "redis_port": req.body.redis_port,
@@ -83,6 +86,46 @@ app.post('/', function(req, res) {
     }
 
 
+  });
+});
+
+app.post('/api/redis-benchmark', function(req, res) {
+  /*
+   * Provide an API endpoint for running a benchmark and getting back a raw JSON.
+   */
+  res.contentType('application/json');
+
+  console.log(req.body);
+  // Get the benchmark parameters from the request body, or use defaults.
+  var redis_host = req.body.host !== undefined ? req.body.host : null;
+  var redis_port = req.body.port !== undefined ? req.body.port : 6379;
+  var redis_pw = req.body.password !== undefined ? req.body.password : "";
+  var num_requests = req.body.requests !== undefined ? req.body.requests : 10000;
+
+  // A Redis host is required.
+  if (!redis_host) {
+    res.status(409);
+    res.send("Bad Request");
+  }
+
+  benchmarkOpts = {
+    "redis_host": redis_host,
+    "redis_port": redis_port,
+    "redis_pw": redis_pw,
+    "num_requests": num_requests,
+    "benchmark_bin": benchmark_cmd
+  };
+
+  console.log(JSON.stringify(benchmarkOpts));
+
+   runBenchmark(benchmarkOpts, function(err, results) {
+    if (err !== null) {
+      res.status(500);
+      res.status("Error running redis-benchmark: " + err);
+    } else {
+      res.status(200);
+      res.json(results);
+    }
   });
 });
 
