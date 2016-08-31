@@ -103,8 +103,8 @@ app.post('/api/redis-benchmark', function(req, res) {
 
   // A Redis host is required.
   if (!redis_host) {
-    res.status(409);
-    res.send("Bad Request");
+    res.status(400);
+    res.send();
   }
 
   benchmarkOpts = {
