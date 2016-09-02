@@ -1,0 +1,6 @@
+.cfignore
+.DS_Store
+.git
+.gitignore
+/manifest.yml
+*.log
