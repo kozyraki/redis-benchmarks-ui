@@ -145,7 +145,7 @@ app.get('/api/redis-instances', function(req, res) {
   var redisInstances = {};
   var services = appEnv.getServices();
   for (var serviceName in services) {
-    if (cfServices[serviceName].tags.indexOf("redis") >= 0) {
+    if (services[serviceName].tags.indexOf("redis") >= 0) {
       redisInstances[serviceName] = appEnv.getServiceCreds(serviceName);
     }
   }
