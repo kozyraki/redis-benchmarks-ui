@@ -98,7 +98,7 @@ Example:
 
     $ curl -H "Content-Type application/json"  https://redis-benchmarks-ui.run.aws-usw02-dev.ice.predix.io/api/redis-instances
     {
-      "java-redis-test-shared": {
+      "redis-benchmark-test": {
         "host": "10.72.138.184",
         "password": "jy1GQ3z695XvLGeTjNBRCoK5",
         "port": "6004"
