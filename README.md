@@ -96,7 +96,7 @@ If the app is not running in CloudFoundry it will return an empty JSON object.
 
 Example:
 
-    $ curl -H "Content-Type application/json"  https://redis-benchmarks-ui.run.aws-usw02-dev.ice.predix.io/api/redis-instances
+    $ curl -H "Content-Type application/json"  https://localhost:6001/api/redis-instances
     {
       "redis-benchmark-test": {
         "host": "10.72.138.184",
