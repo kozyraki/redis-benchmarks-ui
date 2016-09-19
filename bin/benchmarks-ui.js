@@ -139,7 +139,7 @@ app.get('/api/redis-instances', function(req, res) {
 
   // Just return an empty result if the app isn't running in CloudFoundry.
   if (appEnv.isLocal) {
-  res.json({});
+    return res.json({});
   }
 
   var redisInstances = {};
@@ -150,7 +150,7 @@ app.get('/api/redis-instances', function(req, res) {
     }
   }
 
-  res.json(redisInstances);
+  return res.json(redisInstances);
 
 
 });
