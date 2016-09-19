@@ -54,12 +54,14 @@ in OS X.
 
 ### API
 
-As well as providing a web-based GUI for running redis-benchmark this app also provides an API endpoint for executing a
-benchmark and receiving the results as a JSON response.
+As well as providing a web-based GUI for running redis-benchmark this app also provides a couple of useful RESTful
+endpoints.
 
-To use the API send a `POST` request to the app at `/api/redis-benchmark`. You will need to supply the details of the
-Redis instance to benchmark in the body of the request. The `host` option is required, and the rest of the values will
-use default values if no value is given.
+ ####`POST /api/redis-benchmark`
+
+Executes a benchmark and returns the results in JSON format.
+You will need to supply the details of the Redis instance to benchmark in the body of the request. The `host` option is
+required, and the rest of the values will use default values if no value is given.
 
 Here's an example:
 
@@ -82,4 +84,20 @@ Here's an example:
       "LRANGE_500 (first 450 elements)": "37174.72",
       "LRANGE_600 (first 600 elements)": "37313.43",
       "MSET (10 keys)": "40650.41"
+    }
+
+#### `GET /api/redis-instances`
+
+Used to discover the details of Redis instances bound to the application. This only works when the application is
+running inside CloudFoundry. It will parse the Redis services from `VCAP_SERVICES` and return their details in JSON
+format.
+
+Example:
+
+    $ curl -H "Content-Type application/json"  https://redis-benchmarks-ui.run.aws-usw02-dev.ice.predix.io/api/redis-instances
+    {
+      "java-redis-test-shared": {
+        "host": "10.72.138.184",
+        "password": "jy1GQ3z695XvLGeTjNBRCoK5",
+        "port": "6004"
     }
