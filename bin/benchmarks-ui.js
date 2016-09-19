@@ -40,6 +40,10 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+// Get the app environment from cfenv.
+var appEnv = cfenv.getAppEnv();
+
+
 // GET route for index
 app.get('/', function(req, res) {
   res.render('index');
@@ -126,8 +130,32 @@ app.post('/api/redis-benchmark', function(req, res) {
   });
 });
 
+app.get('/api/redis-instances', function(req, res) {
+  /*
+   * Provide an API endpoint to get information about the Redis services bound to this application. Return as a JSON
+   * which includes the instance name and credentials.
+   */
+  res.contentType('application/json');
+
+  // Just return an empty result if the app isn't running in CloudFoundry.
+  if (appEnv.isLocal) {
+  res.json({});
+  }
+
+  var redisInstances = {};
+  var services = appEnv.getServices();
+  for (var serviceName in services) {
+    if (cfServices[serviceName].tags.indexOf("redis") >= 0) {
+      redisInstances[serviceName] = appEnv.getServiceCreds(serviceName);
+    }
+  }
+
+  res.json(redisInstances);
+
+
+});
+
 // Start the application. Get bind details from cfenv
-var appEnv = cfenv.getAppEnv();
 var server = app.listen(appEnv.port, appEnv.bind, function() {
   var host = server.address().address;
   var port = server.address().port;
