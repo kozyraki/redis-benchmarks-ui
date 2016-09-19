@@ -57,7 +57,7 @@ in OS X.
 As well as providing a web-based GUI for running redis-benchmark this app also provides a couple of useful RESTful
 endpoints.
 
- #### `POST /api/redis-benchmark`
+#### `POST /api/redis-benchmark`
 
 Executes a benchmark and returns the results in JSON format.
 You will need to supply the details of the Redis instance to benchmark in the body of the request. The `host` option is
